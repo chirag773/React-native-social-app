@@ -13,7 +13,7 @@ import {
 //register user
 export const registeruser = (newUser) => dispatch => {
   
-    axios.post("http://192.168.0.101:5000/api/users/register", newUser)
+    axios.post("http://192.168.0.102:5000/api/users/register", newUser)
        .then(res => {
         console.log(newUser)
         Actions.login()
@@ -31,7 +31,7 @@ export const registeruser = (newUser) => dispatch => {
 
   export const loginuser = userData => dispatch => {
 
-    axios.post("http://192.168.0.101:5000/api/users/login", userData)
+    axios.post("http://192.168.0.102:5000/api/users/login", userData)
       .then(res => {
 
         // save user token to local storage 

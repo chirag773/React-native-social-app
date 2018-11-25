@@ -14,6 +14,7 @@ import DatePicker from 'react-native-datepicker'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addExperience } from '../../actions/profileActions';
+import { Button } from 'native-base';
 
 
 class AddExperience extends Component {
@@ -228,13 +229,15 @@ class AddExperience extends Component {
               />
                 {errors && (<Text style={{color:"red"}}>{errors.description}</Text>)}
             </View>
-            <View>
-              <TouchableOpacity style={styles.button} onPress={this.onSubmit.bind(this)}>
-                <Text style={styles.buttonText}>
-                    Submit 
-                </Text>    
-              </TouchableOpacity>
-            </View>
+            <Button 
+              block 
+              success
+              onPress={this.onSubmit.bind(this)}
+              style={styles.button}
+              >
+              <Text>Submit </Text>
+            </Button>
+             
           </ScrollView>
         </View>
       </KeyboardAvoidingView>
@@ -281,13 +284,8 @@ scrollView: {
     paddingLeft: 10,
   },
   button:{
-    width:100,
-    backgroundColor: "green",
     marginVertical: 20,
-    borderRadius: 10,
     height:50,
-    justifyContent:"center",
-    marginLeft:"33%"
   },
   buttonText:{
       fontSize:16,

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, RefreshControl, ScrollView , FlatList} from 'react-native';
+import { 
+  Text, 
+  View, 
+  RefreshControl, 
+  ScrollView , 
+  FlatList
+} from 'react-native';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../Spinner";
@@ -8,6 +14,18 @@ import ProfileItem from './ProfileItem';
 import { Actions } from 'react-native-router-flux';
 
 class Profiles extends Component {
+  static navigationOptions = () => ({
+    headerTintColor: '#ffffff',
+    headerStyle: {
+      backgroundColor: 'rgb(44, 111, 148)',
+      borderBottomColor: '#ffffff',
+      borderBottomWidth: 3,
+      
+    },
+    headerTitleStyle: {
+      fontSize: 18,
+    },
+  });
 
   constructor(props) {
     super(props);
@@ -58,6 +76,7 @@ _onRefresh(){
             onRefresh={this._onRefresh.bind(this)}
           />
         }
+        style={{backgroundColor:"white"}}
       >
         {profileItems}
         

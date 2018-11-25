@@ -12,6 +12,7 @@ import {
 import { connect } from "react-redux";
 import { createProfile } from "../../actions/profileActions";
 import PropTypes from "prop-types";
+import { Button } from 'native-base';
 
 class CreateProfile extends Component {
 
@@ -203,7 +204,7 @@ onInstagram(instagram){
               />
                 {errors && (<Text style={{color:"red"}}>{errors.handle}</Text>)}
             </View>
-            <View>
+            <View style={styles.pickerView}>
               <Picker
                 style={{flex:1}}
                 selectedValue={this.state.status}
@@ -293,13 +294,23 @@ onInstagram(instagram){
               >
                 <Text style={styles.Links}>Add Social Network Links (Optional) </Text>
               </TouchableOpacity>
-              {socialInputs}
-              <TouchableOpacity style={styles.button} onPress={this.onSubmit.bind(this)}>
-              <Text style={styles.buttonText}>
-                  Submit 
-              </Text>    
-            </TouchableOpacity>
+              
+                {socialInputs}
             </View>
+              
+            
+
+              <View style={{marginBottom:10}}>
+                <Button 
+                  block 
+                  success
+                  onPress={this.onSubmit.bind(this)}
+                  style={styles.button}
+                  >
+                  <Text>Submit </Text>
+                </Button>
+              </View>
+           
           </ScrollView>
         </View>
         </KeyboardAvoidingView>
@@ -338,6 +349,9 @@ scrollView: {
     paddingTop: 20,
     flex: 1
 },
+pickerView:{
+  borderRadius:10,
+},
   textInput:{
     width:340,
       marginTop: 10,
@@ -361,13 +375,8 @@ scrollView: {
     color:"red"
   },
   button:{
-    width:100,
-    backgroundColor: "green",
     marginVertical: 20,
-    borderRadius: 10,
     height:50,
-    justifyContent:"center",
-    marginLeft:"33%"
   },
   buttonText:{
       fontSize:16,

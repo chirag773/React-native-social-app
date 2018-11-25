@@ -5,9 +5,11 @@ import {
   TouchableOpacity,
   StyleSheet
  } from 'react-native'
+ import PropTypes from "prop-types";
+ import { connect } from "react-redux";
+ import { Card} from 'react-native-elements'
 import { deleteExperience } from "../../actions/profileActions";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import Icon from "react-native-vector-icons/MaterialIcons"
 
 class Experience extends Component {
 
@@ -21,36 +23,58 @@ class Experience extends Component {
 
     const experience = this.props.experience.map(exp => (
       <View key={exp._id}>
-        <View style={styles.experience}>
-          <Text style={styles.experienceText}>Company :- </Text>
-          <Text style={styles.experienceTextContent}>{exp.company}</Text>
-        </View>
-        <View style={styles.experience}>
-          <Text style={styles.experienceText}>Job Title :- </Text>
-          <Text style={styles.experienceTextContent}>{exp.title}</Text>
-        </View>
-        <View style={styles.experience}>
-        <Text style={styles.experienceText}>Starts From :- </Text>
-        <Text style={styles.experienceTextContent}>{exp.from} - </Text>
-        {exp.to === null ? (
-              <Text style={styles.experienceTextContent}>Now</Text>
-            ) : (
-              <Text style={styles.experienceTextContent}>{exp.to}</Text>
-            )}
-        </View>
-          
-          
-        <TouchableOpacity onPress={this.onDeleteClick.bind(this)} style={styles.deleteButton}>
-          <Text style={styles.deleteButtonText}>Delete</Text>
-        </TouchableOpacity>
+          <View style={styles.company}>
+            <Text style={styles.companyText}>Company:- </Text>
+            <Text style={styles.companyName}>{exp.company}</Text>
+          </View>
+       
+
+          <View style={styles.company}>
+            <Text style={styles.companyText}>Starts From:- </Text>
+            <Text style={styles.companyName}>{exp.from} - </Text>
+              {exp.to === null ? (
+                  <Text style={styles.companyName}>Now</Text>
+                ) : (
+                  <Text style={styles.companyName}>{exp.to}</Text>
+              )}
+          </View>
+
+          <View style={styles.company}>
+            <Text style={styles.companyText}>Position:- </Text>
+            <Text style={styles.companyName}>{exp.title}</Text>
+          </View>
+
+          <View style={styles.company}>
+            <Text style={styles.companyText}>
+              Location:- 
+            </Text>
+              {exp.loaction === "" ? null : (
+                <Text style={styles.companyName}>{exp.location}</Text>
+              )}
+            
+          </View>
+
+          <View style={styles.company} >
+            <Text style={styles.companyText}>
+              Description:-
+            </Text>
+              {exp.description === "" ? null : (
+                <Text style={styles.companyName}> {exp.description}</Text>
+              )}
+          </View>
+
+          {/* <TouchableOpacity onPress={this.onDeleteClick.bind(this)} style={styles.deleteButton}>
+            <Text style={styles.deleteButtonText}>Delete</Text>
+          </TouchableOpacity> */}
+
+          <View style={{backgroundColor:"grey", height:1, marginBottom:5, marginTop:5}}/>
+
       </View>
     ));
     return (
-      <View>
-        <Text>====================Experience======================</Text>
+      <Card title="Experience">
         {experience}
-        <Text>====================================================</Text>
-      </View>
+      </Card>
     )
   }
 }
@@ -71,19 +95,18 @@ export default connect(mapStateToProps , { deleteExperience })(Experience);
 
 
 const styles = StyleSheet.create({
-  experience:{
-    flexWrap: 'wrap', 
-        alignItems: 'flex-start',
-        flexDirection:'row',
+  company:{
+    flexWrap:"wrap",
+    flexDirection:"row",
   },
-  experienceText:{
-    fontSize:16,
-    fontWeight:"500",
-
+  companyText:{
+    fontSize:15,
   },
-  experienceTextContent:{
-    fontSize:16,
-    fontWeight:"300"
+  companyName:{
+    fontSize:15,
+    fontStyle:"italic",
+    color:"#0394c0",
+    
   },
   deleteButton:{
     backgroundColor:"red",

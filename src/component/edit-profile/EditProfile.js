@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 import PropTypes from "prop-types";
 import isEmpty from '../../validation/is-empty';
+import { Button } from 'native-base';
 
 class EditProfile extends Component {
 
@@ -249,27 +250,27 @@ onInstagram(instagram){
               />
                 {errors && (<Text style={{color:"red"}}>{errors.handle}</Text>)}
             </View>
-            <View>
-            <Picker
-              style={{flex:1}}
-              selectedValue={this.state.status}
-              onValueChange={this.onStatus.bind(this)}
-              style={{width:340,
-                      marginTop: 10,
-                      height:50,
-                      paddingLeft: 10,
-                      }}
-            >
-              <Picker.Item label= '* Select Professional Status' value= "0"  />
-              <Picker.Item label="Developer" value="Developer" />
-              <Picker.Item label="Junior Develope" value="Junior Develope" />
-              <Picker.Item label="Senior Developer" value="Senior Developer" />
-              <Picker.Item label="Manager" value="Manager" />
-              <Picker.Item label="Student or Learning" value="Student or Learning" />
-              <Picker.Item label="Instructor or Teacher" value="Instructor or Teache" />
-              <Picker.Item label="Intern" value="Intern" />
-              <Picker.Item label="Other" value="Other" />
-            </Picker>
+            <View style={styles.pickerView}>
+              <Picker
+                style={{flex:1}}
+                selectedValue={this.state.status}
+                onValueChange={this.onStatus.bind(this)}
+                style={{width:340,
+                        marginTop: 10,
+                        height:50,
+                        paddingLeft: 10,
+                        }}
+              >
+                <Picker.Item label= '* Select Professional Status' value= "0"  />
+                <Picker.Item label="Developer" value="Developer" />
+                <Picker.Item label="Junior Develope" value="Junior Develope" />
+                <Picker.Item label="Senior Developer" value="Senior Developer" />
+                <Picker.Item label="Manager" value="Manager" />
+                <Picker.Item label="Student or Learning" value="Student or Learning" />
+                <Picker.Item label="Instructor or Teacher" value="Instructor or Teache" />
+                <Picker.Item label="Intern" value="Intern" />
+                <Picker.Item label="Other" value="Other" />
+              </Picker>
               {/* <TextInput style={styles.textInput} 
                 placeholder="Status"
                 placeholderTextColor="black"
@@ -353,12 +354,16 @@ onInstagram(instagram){
               </TouchableOpacity>
               {socialInputs}
             </View>
-            <TouchableOpacity style={styles.button} onPress={this.onSubmit.bind(this)}>
-              <Text style={styles.buttonText}>
-                  Submit 
-              </Text>    
-            </TouchableOpacity>
-            
+            <View style={{marginBottom:10}}>
+                <Button 
+                  block 
+                  success
+                  onPress={this.onSubmit.bind(this)}
+                  style={styles.button}
+                  >
+                  <Text>Submit </Text>
+                </Button>
+            </View>
           </ScrollView>
         </View>
         </KeyboardAvoidingView>
@@ -398,6 +403,9 @@ scrollView: {
     paddingTop: 20,
     flex: 1
 },
+pickerView:{
+  borderRadius:10,
+},
   textInput:{
     width:340,
       marginTop: 10,
@@ -421,13 +429,8 @@ scrollView: {
     color:"red"
   },
   button:{
-    width:100,
-    backgroundColor: "green",
     marginVertical: 20,
-    borderRadius: 10,
     height:50,
-    justifyContent:"center",
-    marginLeft:"33%",
   },
   buttonText:{
       fontSize:16,

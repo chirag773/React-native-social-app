@@ -6,14 +6,16 @@ import {
     TextInput,
     TouchableOpacity,
     KeyboardAvoidingView,
-    ToastAndroid
+    ToastAndroid,
+    ScrollView
     } from 'react-native';
 
 import {Actions} from "react-native-router-flux";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registeruser } from "../../actions/authActions"
+import { registeruser } from "../../actions/authActions";
 import Icons from 'react-native-vector-icons/FontAwesome';
+import { Tooltip } from 'react-native-elements';
 
 
 class SignupForm extends React.Component {
@@ -89,87 +91,101 @@ class SignupForm extends React.Component {
         <View style={styles.top}>
           <Text style={styles.loginText}>S I G N U P</Text>
         </View>
-        <View>
-          <Icons name="user" size={28}
-            style={styles.InputIcons}
-          />
-          <TextInput style={styles.textInput} 
-                    placeholder="name"
-                    placeholderTextColor="black"
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    onChangeText={username =>  this.setState({username:username})}
-                    ref={(input)=>this.username = input}
-                    onSubmitEditing={()=>this.password.focus()} 
-                    value={this.state.name}
-                    onChangeText={this.onName.bind(this)}
-          />
-          {errors && (<Text style={{color:"red", marginLeft:10, marginTop:3}}>{errors.name}</Text>)}
-        </View>
-        <View>
-          <Icons name="envelope" size={26}
-            style={styles.InputIcons}
-          />
-          <TextInput style={styles.textInput} 
-                    placeholder="Email"
-                    autoCorrect={false}
-                    placeholderTextColor="black"
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    // autoFocus={true}
-                    keyboardType="email-address"  
-                    onSubmitEditing={()=>this.username.focus()} 
-                    value={this.state.email}
-                    onChangeText={this.onEmail.bind(this)}
-                    
-          />
-          {errors && (<Text style={{color:"red", marginLeft:10, marginTop:3}}>{errors.email}</Text>)}
-        </View>
+      <View style={styles.scrollViewWrapper}>
         
-        <View>
-          <Icons name="lock" size={28}
-            style={styles.InputIcons}
-          />
-          <TextInput style={styles.textInput} 
-                    placeholder="Password"
-                    placeholderTextColor="black"
-                    secureTextEntry={true}
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    ref={(input)=>this.password = input}
-                    value={this.state.password}
-                    onChangeText={this.onPassword.bind(this)}
-                    
-          />
-          {errors && (<Text style={{color:"red", marginLeft:10, marginTop:3}}>{errors.password}</Text>)}
+        <ScrollView style={styles.scrollView}>
           
-        </View>
-        <View>
-          <Icons name="lock" size={28}
+          <View>
+            <Icons name="user" size={28}
               style={styles.InputIcons}
             />
-          <TextInput style={styles.textInput} 
-                      placeholder="confirm Password"
+            <TextInput style={styles.textInput} 
+                      placeholder="name"
+                      placeholderTextColor="black"
+                      underlineColorAndroid="rgba(0,0,0,0)"
+                      onChangeText={username =>  this.setState({username:username})}
+                      ref={(input)=>this.username = input}
+                      onSubmitEditing={()=>this.email.focus()} 
+                      value={this.state.name}
+                      onChangeText={this.onName.bind(this)}
+            />
+            {errors && (<Text style={{color:"red", marginLeft:10, marginTop:3}}>{errors.name}</Text>)}
+          </View>
+          <View>
+            <Icons name="envelope" size={26}
+                  style={styles.InputIcons}
+                />
+                <TextInput style={styles.textInput} 
+                          placeholder="Email"
+                          autoCorrect={false}
+                          placeholderTextColor="black"
+                          underlineColorAndroid="rgba(0,0,0,0)"
+                          // autoFocus={true}
+                          keyboardType="email-address"  
+                          ref={(input)=>this.email = input}
+                          onSubmitEditing={()=>this.password.focus()} 
+                          value={this.state.email}
+                          onChangeText={this.onEmail.bind(this)}
+                          
+                />
+            
+            {errors && (<Text style={{color:"red", marginLeft:10, marginTop:3}}>{errors.email}</Text>)}
+          </View>
+            <Text>App use Gravatar so if you want a profile image, use a gravatar email</Text>
+          <View>
+            <Icons name="lock" size={28}
+              style={styles.InputIcons}
+            />
+            <TextInput style={styles.textInput} 
+                      placeholder="Password"
                       placeholderTextColor="black"
                       secureTextEntry={true}
                       underlineColorAndroid="rgba(0,0,0,0)"
                       ref={(input)=>this.password = input}
-                      value={this.state.password2}
-                      onChangeText={this.onPassword2.bind(this)}
+                      onSubmitEditing={()=>this.password2.focus()} 
+                      value={this.state.password}
+                      onChangeText={this.onPassword.bind(this)}
                       
             />
-            {errors && (<Text style={{color:"red", marginLeft:10, marginTop:3}}>{errors.password2}</Text>)}
-        </View>
-        <TouchableOpacity style={styles.button} onPress={this.onSignup.bind(this)}>
-            <Text style={styles.buttonText}>
-                Signup 
-            </Text> 
-        </TouchableOpacity>   
-        <View style={styles.signuptextcont}>
-            <Text style={styles.signuptext}>
-                Already have an account? 
-            </Text>
-            <TouchableOpacity onPress={this.goLogin.bind(this)}> 
-                <Text style={styles.signupbutton}> SignIn</Text>
+            {errors && (<Text style={{color:"red", marginLeft:10, marginTop:3}}>{errors.password}</Text>)}
+            
+          </View>
+          <View>
+            <Icons name="lock" size={28}
+                style={styles.InputIcons}
+              />
+            <TextInput style={styles.textInput} 
+                        placeholder="confirm Password"
+                        placeholderTextColor="black"
+                        secureTextEntry={true}
+                        underlineColorAndroid="rgba(0,0,0,0)"
+                        ref={(input)=>this.password2 = input}
+                        value={this.state.password2}
+                        onChangeText={this.onPassword2.bind(this)}
+                        
+              />
+              {errors && (<Text style={{color:"red", marginLeft:10, marginTop:3}}>{errors.password2}</Text>)}
+          </View>
+          <View style={{
+                  justifyContent:"center",
+                  alignItems:"center",}}>
+            <TouchableOpacity style={styles.button} onPress={this.onSignup.bind(this)}>
+                <Text style={styles.buttonText}>
+                    Signup 
+                </Text> 
             </TouchableOpacity>
-        </View>
+          </View>
+            
+          <View style={styles.signuptextcont}>
+              <Text style={styles.signuptext}>
+                  Already have an account? 
+              </Text>
+              <TouchableOpacity onPress={this.goLogin.bind(this)}> 
+                  <Text style={styles.signupbutton}> SignIn</Text>
+              </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
       </KeyboardAvoidingView>
     );
   }
@@ -194,15 +210,34 @@ export default connect(
 )(SignupForm);
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  container:{
+    display:"flex",
+    flex:1,
     backgroundColor:'rgb(119, 92, 91)'
+},
+scrollViewWrapper:{
+    flex:1
+},
+scrollView:{
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 20,
+    flex:1
+},
+  // container: {
+  //   flex: 1,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   backgroundColor:'rgb(119, 92, 91)'
 
-  },
+  // },
+  // ScrollView:{
+  //   flexGrow: 1,
+  //   backgroundColor:'rgb(119, 92, 91)'
+  // },
   top:{
     alignItems: 'center',
+    paddingTop:40
   },
   loginText:{
     color:"white",
@@ -227,22 +262,26 @@ const styles = StyleSheet.create({
     borderBottomWidth:1
 },
 button:{
-  width:340,
+  width:250,
   backgroundColor:"black",
   marginVertical: 10,
   paddingVertical: 16,
   borderRadius: 30,
+  flex:1
 },
 buttonText:{
     fontSize:16,
     fontWeight:"500",
     textAlign:"center",
-    color:"white"
+    color:"white",
+
     
 },
   signuptextcont:{
+    flex:1,
     alignItems: 'center',
     flexDirection: 'row',
+    justifyContent:"center"
   },
   signuptext:{
     fontSize: 15,

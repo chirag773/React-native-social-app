@@ -8,6 +8,10 @@ import {
   ToastAndroid
  } from 'react-native'
 import { Actions } from 'react-native-router-flux';
+import { Button } from 'native-base';
+import Icon from "react-native-vector-icons/FontAwesome";
+import Icons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
 class ProfileActions extends Component {
 
@@ -25,24 +29,37 @@ class ProfileActions extends Component {
   render() {
     return (
       <View style={styles.profileaction}>
-        <TouchableOpacity 
+        <Button 
+          bordered 
           onPress={this.onCreateProfile}
-          style={styles.profileButton}
-          >
-          <Text style={styles.profileButtonText}>  Edit Profile  </Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          onPress={this.onCreateExperience}
+          success
           style={styles.profileButton}
         >
-          <Text style={styles.profileButtonText}>  Add Experience  </Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          onPress={this.onCreateEducation}
+          <Icons name="account-edit"  size={20} style={{paddingLeft:5}}/>
+          <Text style={styles.profileButtonText}>  Edit Profile  </Text>
+        </Button>
+
+        <Button 
+          bordered 
+          onPress={this.onCreateExperience}
+          success
           style={styles.profileButton}
-          >
-          <Text style={styles.profileButtonText}>  Add Education  </Text>
-        </TouchableOpacity>
+        >
+            <MaterialIcon name="work" size={20} style={{paddingLeft:5}}/>
+            <Text style={styles.profileButtonText}>  Add Experience  </Text>
+        </Button>
+        
+        <Button 
+          bordered 
+          onPress={this.onCreateEducation}
+          success
+          style={styles.profileButton}
+        >
+            <Icon name="graduation-cap" size={20} style={{paddingLeft:5}}/>
+            <Text style={styles.profileButtonText}>  Add Education  </Text>
+        </Button>
+
+        
       </View>
     )
   }
@@ -58,16 +75,14 @@ const styles = StyleSheet.create({
     justifyContent:"space-around",
   },
   profileButton:{
-    backgroundColor: "green",
     marginVertical: 10,
     borderRadius: 10,
-    height:40,
-    justifyContent:"center",
+    borderWidth:2
   },
   profileButtonText:{
     fontSize:16,
-    fontWeight:"500",
+    fontWeight:"300",
     textAlign:"center",
-    color:"white"
+    color:"rgb(65, 74, 77)"
   }
 })

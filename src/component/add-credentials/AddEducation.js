@@ -14,6 +14,7 @@ import DatePicker from 'react-native-datepicker'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addEducation } from '../../actions/profileActions';
+import { Button } from 'native-base';
 
 class AddEducation extends Component {
 
@@ -217,7 +218,7 @@ class AddEducation extends Component {
           </View>
           <View>
             <TextInput style={styles.textInput} 
-              placeholder="Job Description"
+              placeholder="Degree Description"
               multiline={true}
               placeholderTextColor="black"
               underlineColorAndroid="rgba(0,0,0,0)" 
@@ -226,13 +227,14 @@ class AddEducation extends Component {
             />
               {errors && (<Text style={{color:"red"}}>{errors.description}</Text>)}
           </View>
-          <View style={styles.submitView}>
-            <TouchableOpacity style={styles.button} onPress={this.onSubmit.bind(this)}>
-              <Text style={styles.buttonText}>
-                Submit 
-              </Text>    
-            </TouchableOpacity>
-          </View>
+            <Button 
+              block 
+              success
+              onPress={this.onSubmit.bind(this)}
+              style={styles.button}
+              >
+              <Text>Submit </Text>
+            </Button>
         </ScrollView>
       </View>
     </KeyboardAvoidingView>
@@ -274,16 +276,6 @@ scrollView: {
     paddingTop: 20,
     flex: 1
 },
-
-textInput:{
-  width:340,
-  marginTop: 10,
-  fontSize:15,
-  height:50,
-  borderRadius: 30,
-  paddingLeft: 50,
-  backgroundColor:'white'
-},
   textInput:{
     width:340,
       marginTop: 10,
@@ -294,13 +286,8 @@ textInput:{
       paddingLeft: 10,
   },
   button:{
-    width:100,
-    backgroundColor: "green",
     marginVertical: 20,
-    borderRadius: 10,
     height:50,
-    justifyContent:"center",
-    marginLeft:"33%"
   },
   buttonText:{
       fontSize:16,

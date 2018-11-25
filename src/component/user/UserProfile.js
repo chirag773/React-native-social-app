@@ -8,23 +8,19 @@ import {
   ToastAndroid,
   RefreshControl,
   ScrollView
- } from 'react-native'
+ } from 'react-native';
  import PropTypes from "prop-types";
  import { connect } from "react-redux";
-import { getCurrentProfile } from "../../actions/profileActions";
-import Experience from './Experience';
-import Education from './Education';
-import Spinner from "../Spinner"
-import ProfileActions from './ProfileActions';
-import { logoutuser } from "../../actions/authActions";
 import { Actions } from 'react-native-router-flux';
+import { getCurrentProfile } from "../../actions/profileActions";
+import { logoutuser } from "../../actions/authActions";
+import UserActions from './UserActions';
+import Spinner from "../Spinner";
 import { Button } from 'native-base';
 
+class UserProfile extends Component {
 
-
-class DashBoard extends Component {
-
-
+  
   static navigationOptions = () => ({
     headerTintColor: '#ffffff',
     headerStyle: {
@@ -39,6 +35,9 @@ class DashBoard extends Component {
     
 });
 
+onCreateProfilePress(){
+  Actions.createProfile()
+}
 
 constructor(props) {
   super(props);
@@ -47,27 +46,25 @@ constructor(props) {
   };
 }
 
-_onRefresh(){
-this.setState({refreshing:true})
-this.props.getCurrentProfile()
-setTimeout(() => {
-  this.setState({refreshing: false});
-}, 1000);
+  
+  onLogoutClick(){
+    this.props.logoutuser()
+    
+  ToastAndroid.show('Successfully Logout..!!', ToastAndroid.SHORT);
 }
 
-
-
-  componentDidMount() {
-    this.props.getCurrentProfile()
+_onRefresh(){
+  this.setState({refreshing:true})
+  this.props.getCurrentProfile()
+  setTimeout(() => {
+    this.setState({refreshing: false});
+  }, 1000);
   }
-
-
-  onCreateProfilePress(){
-    Actions.createProfile()
-  }
+  
 
   render() {
 
+    const { auth } = this.props;
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
 
@@ -78,18 +75,11 @@ setTimeout(() => {
     } else {
       if (Object.keys(profile).length > 0) {
         dashBoardContent = (
-          <View style={styles.wecomeContainer}>
-            <Text style={styles.welcome}>WELCOME {user.name} </Text>
-
-           
-            <Experience experience={profile.experience}/>
-            <Education education={profile.education}/>
-            
-          </View>
+            <UserActions auth={user} profile={profile}/>
           )
       } else {
         dashBoardContent = (
-          <View style={styles.container}> 
+          <View style={styles.noProfileView}> 
             <Text >WELCOME {user.name} </Text>
             <Text>You have not setup your profile </Text>
             <Button 
@@ -104,28 +94,35 @@ setTimeout(() => {
         )
       }
     }
-  
 
+    
     return (
-        <ScrollView 
-              
-              refreshControl={
+      <ScrollView
+        refreshControl={
                   <RefreshControl
                     refreshing={this.state.refreshing}
                     onRefresh={this._onRefresh.bind(this)}
                   />
                 }
-        >
-                    {dashBoardContent}
-                    
-        </ScrollView>
-      
+      >
+      {dashBoardContent}
+        <View style={styles.logoutview}>
+                      <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={this.onLogoutClick.bind(this)} 
+                        activeOpacity={0.7}
+                      >
+                        <Text style={styles.buttonText}>Logout</Text>
+                      </TouchableOpacity>
+                    </View>
+      </ScrollView>
     )
   }
 }
 
 
-DashBoard.propTypes = {
+
+UserProfile.propTypes = {
   getCurrentProfile:PropTypes.func.isRequired,
   logoutuser : PropTypes.func.isRequired,
   auth:PropTypes.object.isRequired,
@@ -142,58 +139,28 @@ export default connect(mapSateToProps,
   { 
     getCurrentProfile,
     logoutuser
-  })(DashBoard);
+  })(UserProfile);
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',  
-    
+  const styles = StyleSheet.create({
+    container: {
+      flexGrow: 1,
+      alignItems: 'center',
+      justifyContent: 'center',  
+      
+    },
+  button:{
+    width:340,
+    backgroundColor: "red",
+    marginVertical: 10,
+    paddingVertical: 16,
+    borderRadius: 30,
   },
-  wecomeContainer:{
-    marginTop:5,
-  },
-  welcome:{
-    fontSize:20,
-    fontWeight:"bold",
-    textAlign:"center",
-  },
-  createprofilebutton:{
-    marginVertical: 20,
-    height:50,
-  },
-  createprofilebuttontext:{
+  buttonText:{
     fontSize:16,
     fontWeight:"500",
     textAlign:"center",
     color:"white"
-    
-  },
-  noProfileView:{
-    flex:1,
-    justifyContent: 'center',
-    alignItems:"center"
-  },
-  logoutview:{
-    width:"100%",
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  button:{
-    backgroundColor: "red",
-    marginVertical: 20,
-    borderRadius: 10,
-    height:50,
-    alignItems:"center",
-    
-  },
-  buttonText:{
-      fontSize:16,
-      fontWeight:"500",
-      textAlign:"center",
-      color:"white"
       
   },
-})
+  })

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
+import { Card} from 'react-native-elements';
 import { 
   Text, 
   View, 
@@ -9,49 +10,73 @@ import {
   StyleSheet
  } from 'react-native'
 import { deleteEducation } from '../../actions/profileActions';
+import Icon from "react-native-vector-icons/FontAwesome"
 
 
 class Education extends Component {
+
   onDeleteClick(id) {
     this.props.deleteEducation(id);
   }
 
   render() {
 
-  
     const education = this.props.education.map(edu => (
-      <View key={edu._id}>
-        <View style={styles.school}>
-          <Text style={styles.schoolText}>School :- </Text>
-          <Text style={styles.schoolTextContent}>{edu.school}</Text>
+      <View  key={edu._id}>
+
+        <View style={styles.company}>
+          <Text style={styles.companyText}>School:- </Text>
+          <Text style={styles.companyName}>{edu.school}</Text>
         </View>
-        <View style={styles.school}>
-          <Text style={styles.schoolText}>Degree :- </Text>
-          <Text style={styles.schoolTextContent}>{edu.degree}</Text>
-        </View>
-        <View style={styles.school}>
-          <Text style={styles.schoolText}>Statrs from :- </Text>
-          <Text style={styles.schoolTextContent}>{edu.from} - </Text>
-          {edu.to === null ? (
-              <Text style={styles.schoolTextContent}>Now</Text>
-            ) : (
-              <Text style={styles.schoolTextContent}>{edu.to}</Text>
+
+        <View style={styles.company}>
+          <Text style={styles.companyText}>Starts From:- </Text>
+          <Text style={styles.companyName}>{edu.from} - </Text>
+            {edu.to === null ? (
+                <Text style={styles.companyName}>Now</Text>
+              ) : (
+                <Text style={styles.companyName}>{edu.to}</Text>
             )}
         </View>
-          
-          
+
+        <View style={styles.company}>
+          <Text style={styles.companyText}>Degree:- </Text>
+          <Text style={styles.companyName}>{edu.degree}</Text>
+        </View>
+
+        <View style={styles.company}>
+          <Text style={styles.companyText}>Field of study:- </Text>
+          <Text style={styles.companyName}>{edu.fieldofstudy}</Text>
+        </View>
+        
+
+        <View style={styles.company} multiline={true}>
+          <Text style={styles.companyText}>
+            Description:-
+          </Text>
+            {edu.description === "" ? null : (
+              <Text style={styles.companyName}> {edu.description}</Text>
+            )}
+        </View>
+{/*             
         <TouchableOpacity onPress={this.onDeleteClick.bind(this)} style={styles.deleteButton}>
           <Text style={styles.deleteButtonText}>Delete</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+
+        <View style={{backgroundColor:"grey", height:1, marginBottom:5, marginTop:5}}/>
+
+
       </View>
     ));
 
 
     return (
-      <View>
-        <Text >Education</Text>
-        {education}
+      <View style={{marginBottom:10}}>
+        <Card title="Education" >
+          {education}
+        </Card>
       </View>
+      
     );
   }
 }
@@ -64,17 +89,16 @@ export default connect(null, { deleteEducation })(Education);
 
 
 const styles = StyleSheet.create({
-  school:{
-        flexDirection:'row',
+  company:{
+    flexDirection:"row"
   },
-  schoolText:{
-    fontSize:16,
-    fontWeight:"500",
-
+  companyText:{
+    fontSize:15,
   },
-  schoolTextContent:{
-    fontSize:16,
-    fontWeight:"300"
+  companyName:{
+    fontSize:15,
+    fontStyle:"italic",
+    color:"#0394c0"
   },
   deleteButton:{
     backgroundColor:"red",
