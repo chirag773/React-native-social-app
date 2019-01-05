@@ -1,7 +1,4 @@
 import axios from "axios";
-
-
-
 import {
   ADD_POST,
   GET_ERRORS,
@@ -15,7 +12,7 @@ import {
 //add post 
 export const addPost = postData => dispatch => {
   dispatch(clearErrors());
-  axios.post("http://192.168.0.102:5000/api/posts", postData)
+  axios.post("http://your_ip/api/posts", postData)
     .then(res => 
       dispatch({
         type:ADD_POST,
@@ -35,7 +32,7 @@ export const addPost = postData => dispatch => {
 export const getPosts = () => dispatch => {
   dispatch(setPostLoading());
   axios
-    .get('http://192.168.0.102:5000/api/posts')
+    .get('http://your_ip/api/posts')
     .then(res =>
       dispatch({
         type: GET_POSTS,
@@ -54,7 +51,7 @@ export const getPosts = () => dispatch => {
 export const getPost = id => dispatch => {
   dispatch(setPostLoading());
   axios
-    .get(`http://192.168.0.102:5000/api/posts/${id}`)
+    .get(`http://your_ip/api/posts/${id}`)
     .then(res =>
       dispatch({
         type: GET_POST,
@@ -74,7 +71,7 @@ export const getPost = id => dispatch => {
 // Delete Post
 export const deletePost = id => dispatch => {
   axios
-    .delete(`http://192.168.0.102:5000/api/posts/${id}`)
+    .delete(`http://your_ip/api/posts/${id}`)
     .then(res =>
       dispatch({
         type: DELETE_POST,
@@ -92,7 +89,7 @@ export const deletePost = id => dispatch => {
 // Add Like
 export const addLike = id => dispatch => {
   axios
-    .post(`http://192.168.0.102:5000/api/posts/like/${id}`)
+    .post(`http://your_ip/api/posts/like/${id}`)
     .then(res => dispatch(getPosts()))
     .catch(err =>
       dispatch({
@@ -105,7 +102,7 @@ export const addLike = id => dispatch => {
 // // Remove Like
 export const removeLike = id => dispatch => {
   axios
-    .post(`http://192.168.0.102:5000/api/posts/unlike/${id}`)
+    .post(`http://your_ip/api/posts/unlike/${id}`)
     .then(res => dispatch(getPosts()))
     .catch(err =>
       dispatch({
@@ -118,7 +115,7 @@ export const removeLike = id => dispatch => {
 // dis Like
 export const disLike = id => dispatch => {
   axios
-    .post(`http://192.168.0.102:5000/api/posts/dislike/${id}`)
+    .post(`http://your_ip/api/posts/dislike/${id}`)
     .then(res => dispatch(getPosts()))
     .catch(err =>
       dispatch({
@@ -132,7 +129,7 @@ export const disLike = id => dispatch => {
 //undislike
 export const removedisLike = id => dispatch => {
   axios
-    .post(`http://192.168.0.102:5000/api/posts/undislike/${id}`)
+    .post(`http://your_ip/api/posts/undislike/${id}`)
     .then(res => dispatch(getPosts()))
     .catch(err =>
       dispatch({
@@ -146,7 +143,7 @@ export const removedisLike = id => dispatch => {
 export const addComment = (postId, commentData) => dispatch => {
   dispatch(clearErrors());
   axios
-    .post(`http://192.168.0.102:5000/api/posts/comment/${postId}`, commentData)
+    .post(`http://your_ip/api/posts/comment/${postId}`, commentData)
     .then(res =>
       dispatch({
         type: GET_POST,
@@ -164,7 +161,7 @@ export const addComment = (postId, commentData) => dispatch => {
 // Delete Comment
 export const deleteComment = (postId, commentId) => dispatch => {
   axios
-    .delete(`http://192.168.0.102:5000/api/posts/comment/${postId}/${commentId}`)
+    .delete(`http://your_ip/api/posts/comment/${postId}/${commentId}`)
     .then(res =>
       dispatch({
         type: GET_POST,
